@@ -27,7 +27,7 @@
 | **Canvas Implementation** | Liam         | Feb 13th      |  
 | **Pen & Brush Size** | Spencer        | Feb 16th      |  
 | **Pen Color**       | Rohith         | Feb 19th      |  
-| **Pen Shape**       | Liam           | Feb 19th      |  
+| **Pen Shape**       | Liam / Spencer           | Feb 19th      |  
 
 ## **App Layout**  
 - **Splash Screen** 
