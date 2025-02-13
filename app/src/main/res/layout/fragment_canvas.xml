@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <!-- Drawing Canvas View -->
 
@@ -15,6 +15,7 @@
         android:layout_height="130dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:animateLayoutChanges="true"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,13 +35,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginBottom="8dp"
-                android:text="Load Files" />
+                android:backgroundTint="#9567A8F2"
+                android:text="Load Files"
+                android:textAlignment="textStart"
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="109dp"
                 android:layout_height="48dp"
-                android:background="#FFFFFF"
+                android:backgroundTint="#505D89"
                 android:fontFamily="monospace"
                 android:text="Save"
                 android:textAlignment="center"
@@ -50,17 +54,41 @@
 
         </LinearLayout>
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="215dp"
-            android:layout_height="42dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:contextClickable="true"
-            android:indeterminate="false"
-            android:max="50"
-            android:progress="0"
-            android:scaleX="0.5" />
+        <LinearLayout
+            android:id="@+id/sizeOptionsLayout"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:layerType="none"
+            android:layoutDirection="ltr"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sizeLabel"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="8dp"
+                android:text="Size"
+                android:textAlignment="center"
+                android:textColor="#BF5555"
+                android:textSize="12sp" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:indeterminate="false"
+                android:max="50"
+                android:paddingStart="26dp"
+                android:progress="0"
+                android:progressTint="#35889E"
+                android:scaleX="1.25"
+                android:scaleY="1.25" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -74,7 +102,9 @@
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
