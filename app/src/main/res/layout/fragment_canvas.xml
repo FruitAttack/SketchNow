@@ -92,7 +92,7 @@
 
     </LinearLayout>
 
-    <View
+    <com.example.drawingapp.DrawingView
         android:id="@+id/drawingCanvas"
         android:layout_width="407dp"
         android:layout_height="639dp"

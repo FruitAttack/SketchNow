@@ -26,9 +26,15 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
     private var bitmap: Bitmap? = null
     private var canvas: Canvas? = null
 
-    init {
-        bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888)
-        canvas = Canvas(bitmap!!)
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+
+        // Only set up the bitmap if it hasn't been set already
+        if (bitmap == null) {
+            // Create a bitmap with the size of the DrawingView
+            bitmap = Bitmap.createBitmap(right - left, bottom - top, Bitmap.Config.ARGB_8888)
+            canvas = Canvas(bitmap!!)
+        }
     }
 
     //draws on the canvas

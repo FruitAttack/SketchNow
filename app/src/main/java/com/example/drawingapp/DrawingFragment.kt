@@ -12,6 +12,6 @@ class DrawingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_drawing, container, false)
+        return inflater.inflate(R.layout.fragment_canvas, container, false)
     }
 }
