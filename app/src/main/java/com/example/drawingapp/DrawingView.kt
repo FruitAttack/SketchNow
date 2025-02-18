@@ -9,9 +9,11 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import android.graphics.Path
+import android.widget.SeekBar
 
 //custom class to allow drawing onto a canvas
 class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+
 
     //the path is for tracking the user's drawing path
     private var path: Path = Path()
@@ -21,7 +23,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
     private var paint: Paint = Paint().apply {
         color = Color.BLACK
         style = Paint.Style.STROKE
-        strokeWidth = 10f
+        strokeWidth = 10F
     }
     private var bitmap: Bitmap? = null
     private var canvas: Canvas? = null
@@ -35,6 +37,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
             bitmap = Bitmap.createBitmap(right - left, bottom - top, Bitmap.Config.ARGB_8888)
             canvas = Canvas(bitmap!!)
         }
+
     }
 
     //draws on the canvas
@@ -58,6 +61,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         val y = event.y
 
         when(event.action) {
+
             //start a new path
             MotionEvent.ACTION_DOWN -> {
                 path.moveTo(x, y)
@@ -76,8 +80,15 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
                 path.reset()
                 invalidate()
             }
+
         }
 
         return true
     }
+
+    fun setPenSize(size: Float) {
+        paint.strokeWidth = size
+        invalidate()
+    }
+
 }
