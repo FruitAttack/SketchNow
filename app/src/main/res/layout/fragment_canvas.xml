@@ -13,7 +13,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="404dp"
         android:layout_height="130dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
         android:animateLayoutChanges="true"
         android:orientation="horizontal"
@@ -67,6 +67,7 @@
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:paddingTop="8dp"
                 android:text="Size"
                 android:textAlignment="center"
@@ -88,6 +89,95 @@
                 android:progressTint="#35889E"
                 android:scaleX="1.25"
                 android:scaleY="1.25" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="166dp"
+            android:layout_height="85dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:fontFamily="@font/archivo_light"
+                android:text="Color"
+                android:typeface="serif" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <HorizontalScrollView
+                android:id="@+id/colorScroller"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:clickable="true">
+
+                <LinearLayout
+                    android:id="@+id/colorOptionsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/blackColorButton"
+                        android:layout_width="20dp"
+                        android:layout_height="29dp"
+                        android:layout_margin="3dp"
+                        android:backgroundTint="@color/black"
+                        app:cornerRadius="3dp" />
+
+                    <Button
+                        android:id="@+id/redColorButton"
+                        android:layout_width="20dp"
+                        android:layout_height="29dp"
+                        android:layout_margin="3dp"
+                        android:backgroundTint="#FF0000"
+                        app:cornerRadius="3dp" />
+
+                    <Button
+                        android:id="@+id/blueColorButton"
+                        android:layout_width="20dp"
+                        android:layout_height="29dp"
+                        android:layout_margin="3dp"
+                        android:backgroundTint="#0000FF"
+                        app:cornerRadius="3dp" />
+
+                    <Button
+                        android:id="@+id/greenColorButton"
+                        android:layout_width="20dp"
+                        android:layout_height="29dp"
+                        android:layout_margin="3dp"
+                        android:backgroundTint="#00FF00"
+                        app:cornerRadius="3dp" />
+
+                    <Button
+                        android:id="@+id/orangeColorButton"
+                        android:layout_width="20dp"
+                        android:layout_height="29dp"
+                        android:layout_margin="3dp"
+                        android:backgroundTint="#FFA500"
+                        app:cornerRadius="3dp" />
+
+                    <Button
+                        android:id="@+id/customColorButton"
+                        android:layout_width="22dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="1dp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:padding="0.5dp"
+                        android:text="+"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="3dp" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
         </LinearLayout>
 
     </LinearLayout>

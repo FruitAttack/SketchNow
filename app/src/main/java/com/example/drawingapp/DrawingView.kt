@@ -91,4 +91,9 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         invalidate()
     }
 
+    fun setColor(color: Int) {
+        paint.color = color
+        invalidate()
+    }
+
 }

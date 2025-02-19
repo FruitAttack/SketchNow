@@ -1,5 +1,6 @@
 package com.example.drawingapp
 
+import android.graphics.Color
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,6 +31,26 @@ class DrawingFragment : Fragment() {
             override fun onStopTrackingTouch(seek: SeekBar) {}
         })
 
+        setupColorButtons(view, drawingView)
         return view
+    }
+
+    private fun setupColorButtons(view: View, drawingView: DrawingView) {
+
+        view.findViewById<View>(R.id.blackColorButton).setOnClickListener {
+            drawingView.setColor(Color.BLACK)
+        }
+        view.findViewById<View>(R.id.redColorButton).setOnClickListener {
+            drawingView.setColor(Color.RED)
+        }
+        view.findViewById<View>(R.id.blueColorButton).setOnClickListener {
+            drawingView.setColor(Color.BLUE)
+        }
+        view.findViewById<View>(R.id.greenColorButton).setOnClickListener {
+            drawingView.setColor(Color.GREEN)
+        }
+        view.findViewById<View>(R.id.orangeColorButton).setOnClickListener {
+            drawingView.setColor(Color.parseColor("#FFA500"))
+        }
     }
 }
