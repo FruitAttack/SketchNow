@@ -54,7 +54,9 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
     //when the user touches the canvas
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (bitmap == null || event.x < 0 || event.y < 0 || event.x >= bitmap!!.width || event.y >= bitmap!!.height) {
-            return false
+            path.reset();
+            invalidate();
+            return false;
         }
 
         val x = event.x
