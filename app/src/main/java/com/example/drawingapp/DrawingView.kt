@@ -24,6 +24,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         color = Color.BLACK
         style = Paint.Style.STROKE
         strokeWidth = 10F
+        alpha = 255
     }
     private var bitmap: Bitmap? = null
     private var canvas: Canvas? = null
@@ -36,6 +37,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
             // Create a bitmap with the size of the DrawingView
             bitmap = Bitmap.createBitmap(right - left, bottom - top, Bitmap.Config.ARGB_8888)
             canvas = Canvas(bitmap!!)
+            canvas?.drawColor(Color.TRANSPARENT)
         }
 
     }
@@ -54,48 +56,56 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
     //when the user touches the canvas
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (bitmap == null || event.x < 0 || event.y < 0 || event.x >= bitmap!!.width || event.y >= bitmap!!.height) {
-            path.reset();
-            invalidate();
-            return false;
+            path.reset()
+            invalidate()
+            return false
         }
 
         val x = event.x
         val y = event.y
 
-        when(event.action) {
+        when (event.action) {
 
-            //start a new path
+            // Start a new path
             MotionEvent.ACTION_DOWN -> {
                 path.moveTo(x, y)
             }
 
-            //continue drawing on the path
+            // Continue drawing on the path
             MotionEvent.ACTION_MOVE -> {
                 path.lineTo(x, y)
-                canvas?.drawPath(path, paint)
+                // Temporary drawing to the screen, not the bitmap
                 invalidate()
             }
 
-            //reset path when touch is lifted
+            // Finish the drawing
             MotionEvent.ACTION_UP -> {
-                canvas?.drawPath(path, paint)
+                bitmap?.let {
+                    canvas?.drawPath(path, paint)
+                }
                 path.reset()
                 invalidate()
             }
-
         }
 
         return true
     }
 
+
     fun setPenSize(size: Float) {
         paint.strokeWidth = size
-        invalidate()
     }
 
     fun setColor(color: Int) {
+        val alpha = paint.alpha
         paint.color = color
-        invalidate()
+        paint.alpha = alpha
+    }
+
+    //sets the transparency of the paint
+    //0 is fully transparent, 255 is fully solid
+    fun setOpacity(opacity: Int) {
+        paint.alpha = opacity;
     }
 
 }

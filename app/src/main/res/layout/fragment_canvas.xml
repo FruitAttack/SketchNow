@@ -62,20 +62,58 @@
             android:layoutDirection="ltr"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/sizeOptionsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layerType="none"
+                android:layoutDirection="ltr"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sizeLabel"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:paddingTop="8dp"
+                    android:text="Size"
+                    android:textAlignment="center"
+                    android:textColor="#BF5555"
+                    android:textSize="12sp" />
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="111dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:contextClickable="true"
+                    android:indeterminate="false"
+                    android:max="50"
+                    android:paddingStart="26dp"
+                    android:progress="0"
+                    android:progressTint="#35889E"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25" />
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/sizeLabel"
+                android:id="@+id/opacityLabel"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:paddingTop="8dp"
-                android:text="Size"
+                android:text="Opacity"
                 android:textAlignment="center"
                 android:textColor="#BF5555"
                 android:textSize="12sp" />
 
             <SeekBar
-                android:id="@+id/seekBar"
+                android:id="@+id/opacityBar"
                 android:layout_width="111dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -83,7 +121,7 @@
                 android:clickable="true"
                 android:contextClickable="true"
                 android:indeterminate="false"
-                android:max="50"
+                android:max="255"
                 android:paddingStart="26dp"
                 android:progress="0"
                 android:progressTint="#35889E"

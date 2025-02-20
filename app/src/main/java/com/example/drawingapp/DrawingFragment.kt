@@ -17,6 +17,7 @@ class DrawingFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_canvas, container, false)
         val drawingView = view.findViewById<DrawingView>(R.id.drawingCanvas)
         val seekBar = view.findViewById<SeekBar>(R.id.seekBar)
+        val opacityBar = view.findViewById<SeekBar>(R.id.opacityBar)
 
         // Initialize the SeekBar to change pen size
         seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -25,6 +26,17 @@ class DrawingFragment : Fragment() {
                 // Avoid zero pen size
                 val penSize = if (progress > 0) progress.toFloat() else 1f
                 drawingView.setPenSize(penSize)
+            }
+            override fun onStartTrackingTouch(seek: SeekBar) {}
+
+            override fun onStopTrackingTouch(seek: SeekBar) {}
+        })
+
+        //initialize the opacityBar to change paint alpha value
+        opacityBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                drawingView.setOpacity(255 - progress)
             }
             override fun onStartTrackingTouch(seek: SeekBar) {}
 
