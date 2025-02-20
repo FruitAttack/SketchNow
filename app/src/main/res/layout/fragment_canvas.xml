@@ -55,7 +55,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/sizeOptionsLayout"
+            android:id="@+id/penOptionsLayout"
             android:layout_width="116dp"
             android:layout_height="wrap_content"
             android:layerType="none"
