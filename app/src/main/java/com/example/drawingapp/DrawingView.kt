@@ -108,4 +108,14 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         paint.alpha = opacity;
     }
 
+    fun getPenSize(): Float
+    {
+        return paint.strokeWidth
+    }
+
+    fun getPenColor(): Int
+    {
+        return paint.color
+    }
+
 }
