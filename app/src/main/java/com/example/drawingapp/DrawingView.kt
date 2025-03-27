@@ -1,24 +1,20 @@
 package com.example.drawingapp
 
-import android.view.View
-import android.util.AttributeSet
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
+import android.util.AttributeSet
 import android.view.MotionEvent
-import android.graphics.Path
-import android.widget.SeekBar
+import android.view.View
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 //custom class to allow drawing onto a canvas
 class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
-
     //the path is for tracking the user's drawing path
     private var path: Path = Path()
 
-    //settings for painting stuff, like the color, style, size, etc.
+    //settings for painting stuff, like the color, style, size, etc
     //this will be the default setting when the app starts up
     private var paint: Paint = Paint().apply {
         color = Color.BLACK
@@ -26,62 +22,77 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         strokeWidth = 10F
         alpha = 255
     }
+
     private var bitmap: Bitmap? = null
     private var canvas: Canvas? = null
+    lateinit var viewModel: DrawingViewModel
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        (context as? androidx.lifecycle.LifecycleOwner)?.lifecycleScope?.launch {
+            viewModel.penSize.collect {
+                paint.strokeWidth = it
+                invalidate()
+            }
+        }
+
+        (context as? androidx.lifecycle.LifecycleOwner)?.lifecycleScope?.launch {
+            viewModel.penColor.collect {
+                paint.color = it
+                invalidate()
+            }
+        }
+
+        (context as? androidx.lifecycle.LifecycleOwner)?.lifecycleScope?.launch {
+            viewModel.penOpacity.collect {
+                paint.alpha = it
+                invalidate()
+            }
+        }
+    }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
-        // Only set up the bitmap if it hasn't been set already
         if (bitmap == null) {
-            // Create a bitmap with the size of the DrawingView
-            bitmap = Bitmap.createBitmap(right - left, bottom - top, Bitmap.Config.ARGB_8888)
+            bitmap = viewModel.getBitmap() ?: Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             canvas = Canvas(bitmap!!)
             canvas?.drawColor(Color.TRANSPARENT)
         }
-
     }
 
     //draws on the canvas
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
         bitmap?.let {
             canvas.drawBitmap(it, 0f, 0f, null)
         }
-
         canvas.drawPath(path, paint)
     }
 
     //when the user touches the canvas
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (bitmap == null || event.x < 0 || event.y < 0 || event.x >= bitmap!!.width || event.y >= bitmap!!.height) {
-            path.reset()
             invalidate()
             return false
         }
 
-        val x = event.x
-        val y = event.y
-
         when (event.action) {
-
-            // Start a new path
             MotionEvent.ACTION_DOWN -> {
-                path.moveTo(x, y)
+                path.moveTo(event.x, event.y)
             }
-
-            // Continue drawing on the path
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(x, y)
-                // Temporary drawing to the screen, not the bitmap
+                path.lineTo(event.x, event.y)
                 invalidate()
             }
-
-            // Finish the drawing
             MotionEvent.ACTION_UP -> {
                 bitmap?.let {
                     canvas?.drawPath(path, paint)
+                    viewModel.setBitmap(it)
                 }
                 path.reset()
                 invalidate()
@@ -91,31 +102,16 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         return true
     }
 
-
+    //drawing options functions
     fun setPenSize(size: Float) {
-        paint.strokeWidth = size
+        viewModel.setPenSize(size)
     }
 
     fun setColor(color: Int) {
-        val alpha = paint.alpha
-        paint.color = color
-        paint.alpha = alpha
+        viewModel.setColor(color)
     }
 
-    //sets the transparency of the paint
-    //0 is fully transparent, 255 is fully solid
     fun setOpacity(opacity: Int) {
-        paint.alpha = opacity;
+        viewModel.setOpacity(opacity)
     }
-
-    fun getPenSize(): Float
-    {
-        return paint.strokeWidth
-    }
-
-    fun getPenColor(): Int
-    {
-        return paint.color
-    }
-
 }
