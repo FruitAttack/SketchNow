@@ -32,6 +32,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         observeViewModel()
     }
 
+    //observes changes made to the viewmodel that we need to change, such as paint options or the canvas
     private fun observeViewModel() {
         (context as? androidx.lifecycle.LifecycleOwner)?.lifecycleScope?.launch {
             viewModel.penSize.collect {
@@ -53,15 +54,27 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
                 invalidate()
             }
         }
+
+        //observe bitmap changes and update drawing surface
+        (context as? androidx.lifecycle.LifecycleOwner)?.lifecycleScope?.launch {
+            viewModel.bitmap.collect { newBitmap ->
+                newBitmap?.let {
+                    setBitmap(it)
+                }
+            }
+        }
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
         if (bitmap == null) {
-            bitmap = viewModel.getBitmap() ?: Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             canvas = Canvas(bitmap!!)
             canvas?.drawColor(Color.TRANSPARENT)
+
+            //store in viewModel so it persists
+            viewModel.setBitmap(bitmap!!)
         }
     }
 
@@ -74,7 +87,7 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         canvas.drawPath(path, paint)
     }
 
-    //when the user touches the canvas
+    //when the suer touches the canvas
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (bitmap == null || event.x < 0 || event.y < 0 || event.x >= bitmap!!.width || event.y >= bitmap!!.height) {
             invalidate()
@@ -100,6 +113,12 @@ class DrawingView(context: Context, attrs: AttributeSet? = null) : View(context,
         }
 
         return true
+    }
+
+    fun setBitmap(newBitmap: Bitmap) {
+        bitmap = newBitmap.copy(Bitmap.Config.ARGB_8888, true)
+        canvas = Canvas(bitmap!!)
+        invalidate()
     }
 
     //drawing options functions

@@ -1,5 +1,5 @@
 package com.example.drawingapp
-
+/*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,3 +39,4 @@ class FileMenuFragment : Fragment() {
 }
 
 class F
+*/
