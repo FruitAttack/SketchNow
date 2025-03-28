@@ -122,14 +122,12 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
     }
 
     //gets all the drawings in the database
-    fun getAllDrawings() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val allDrawings = drawingRepository.getAllDrawings()
+    suspend fun getAllDrawings():List<DrawingEntity> {
+            return withContext(Dispatchers.IO) {
+                drawingRepository.getAllDrawings()
 
                 //here someone can do something with these, like display them all in a load image thing or something
             }
-        }
     }
 
     //load a drawing by filename
