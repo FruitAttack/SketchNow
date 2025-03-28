@@ -92,8 +92,11 @@ class DrawingFragment : Fragment() {
     //temporary - saves the current canvas as image.png
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
-            viewModel.saveDrawing("image.png")
-            Toast.makeText(requireContext(), "Drawing saved as image.png", Toast.LENGTH_SHORT).show()
+            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date)
+            val filename = "drawing_$timestamp"
+
+            viewModel.saveDrawing(filename)
+            Toast.makeText(requireContext(), "Drawing saved as $filename", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -107,7 +110,6 @@ class DrawingFragment : Fragment() {
         }
     }
 
-    /*
         private fun setupColorButtons(view: View, drawingView: DrawingView) {
         view.findViewById<View>(R.id.blackColorButton).setOnClickListener {
             drawingView.setColor(Color.BLACK)
@@ -126,6 +128,7 @@ class DrawingFragment : Fragment() {
         }
     }
 
+    /*
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
 
@@ -140,7 +143,6 @@ class DrawingFragment : Fragment() {
      */
 
     //observes bitmap changes to the viewModel, so we can update the view
-    //mostly for loading images since drawing to the canvas itself draws on the view first
     private fun observeBitmap() {
         lifecycleScope.launch {
             viewModel.bitmap.collectLatest { newBitmap ->
