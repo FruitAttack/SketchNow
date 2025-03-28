@@ -89,7 +89,7 @@ class DrawingFragment : Fragment() {
         }
     }
 
-    //temporary - saves the current canvas as image.png
+    //saves the current canvas as image.png
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date)
