@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.Date
 
 class DrawingFragment : Fragment() {
 
@@ -92,8 +93,8 @@ class DrawingFragment : Fragment() {
     //saves the current canvas as image.png
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
-            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date)
-            val filename = "drawing_$timestamp"
+            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val filename = "drawing_$timestamp.png"
 
             viewModel.saveDrawing(filename)
             Toast.makeText(requireContext(), "Drawing saved as $filename", Toast.LENGTH_SHORT).show()
