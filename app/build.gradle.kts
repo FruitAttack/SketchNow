@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.fragment.testing)
     implementation(libs.androidx.espresso.core)
     implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.navigation.fragment.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 

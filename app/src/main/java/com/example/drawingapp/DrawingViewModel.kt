@@ -17,6 +17,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 
+
 class DrawingViewModel(application: Application) : AndroidViewModel(application) {
     private val _penSize = MutableStateFlow(10f)
     val penSize: StateFlow<Float> get() = _penSize

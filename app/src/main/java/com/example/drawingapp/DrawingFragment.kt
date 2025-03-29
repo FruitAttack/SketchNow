@@ -1,23 +1,44 @@
 package com.example.drawingapp
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.graphics.Color
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import io.ktor.http.HttpHeaders.Date
-import kotlinx.coroutines.launch
+import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.get
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
+
 
 class DrawingFragment : Fragment() {
 
@@ -34,11 +55,8 @@ class DrawingFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(DrawingViewModel::class.java)
         val drawingView = view.findViewById<DrawingView>(R.id.drawingCanvas)
         drawingView.viewModel = viewModel
-
         setupSeekBars(view, drawingView)
         setupColorButtons(view, drawingView)
-
-        drawingRepository = DrawingRepository()
 
         saveButton = view.findViewById(R.id.saveButton)
         loadButton = view.findViewById(R.id.loadButton)
@@ -93,7 +111,7 @@ class DrawingFragment : Fragment() {
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
 
-            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date)
+            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val filename = "drawing_$timestamp"
 
             viewModel.saveDrawing(filename)
@@ -102,25 +120,17 @@ class DrawingFragment : Fragment() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
     private fun setupLoadButton() {
         loadButton.setOnClickListener {
-            lifecycleScope.launch {
-                val drawings = viewModel.getAllDrawings()
 
-                if (drawings.isEmpty()) {
-                    Toast.makeText(requireContext(), "No saved drawings", Toast.LENGTH_SHORT).show()
-                    return@launch
-                }
+            try {
+//        APPEND action element's id attribute of canvas fragment in navigation graph here after R.id.
+            findNavController().navigate(R.id.)
 
-                val sortedDrawings = drawings.sortedByDescending { it.filename }
-                val drawingNames = sortedDrawings.map {it.filename}.toTypedArray()
+        } catch (e: Exception) {
 
-                AlertDialog().Builder(requireContext()).setTitle("Load Drawing").setItems(drawingNames) { _, which ->
-                    val selectedFilename = drawingNames[which]
-                    viewModel.loadImageToBitmap(selectedFilename)
-                }.setNegativeButton("Cancel", null).create().show()
+            Toast.makeText(requireContext(), "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            Log.e("NAV_ERROR", " Navigation failed while loading", e)
             }
         }
     }
