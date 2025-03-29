@@ -11,15 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.Date
+import androidx.fragment.app.activityViewModels
 
 class DrawingFragment : Fragment() {
 
-    private lateinit var viewModel: DrawingViewModel
+    private val viewModel: DrawingViewModel by activityViewModels()
     private lateinit var drawingView: DrawingView
     private lateinit var saveButton: Button
     private lateinit var loadButton: Button
@@ -29,8 +31,6 @@ class DrawingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_canvas, container, false)
-        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application))
-            .get(DrawingViewModel::class.java)
 
         drawingView = view.findViewById(R.id.drawingCanvas)
         drawingView.viewModel = viewModel
@@ -101,13 +101,10 @@ class DrawingFragment : Fragment() {
         }
     }
 
-    //temporary - loads the image named image.png
+    //button takes us to the FileMenu screen where images can be loaded and deleted
     private fun setupLoadButton() {
         loadButton.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.loadImageToBitmap("image.png")
-                Toast.makeText(requireContext(), "image.png loaded", Toast.LENGTH_SHORT).show()
-            }
+            findNavController().navigate(R.id.action_drawingFragment_to_fileMenuFragment)
         }
     }
 
@@ -128,20 +125,6 @@ class DrawingFragment : Fragment() {
             drawingView.setColor(Color.parseColor("#FFA500"))
         }
     }
-
-    /*
-    private fun setupSaveButton() {
-        saveButton.setOnClickListener {
-
-            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date)
-            val filename = "drawing_$timestamp"
-
-            viewModel.saveDrawing(filename)
-
-            Toast.makeText(requireContext(), "Drawing saved as $filename", Toast.LENGTH_SHORT).show()
-        }
-    }
-     */
 
     //observes bitmap changes to the viewModel, so we can update the view
     private fun observeBitmap() {

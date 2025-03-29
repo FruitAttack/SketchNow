@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import android.os.Environment
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,7 +31,14 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
     private val _bitmap = MutableStateFlow<Bitmap?>(null)
     val bitmap: StateFlow<Bitmap?> get() = _bitmap
 
+    private val _drawings = MutableStateFlow<List<DrawingEntity>>(emptyList())
+    val drawings: StateFlow<List<DrawingEntity>> get() = _drawings
+
     private val drawingRepository = DrawingRepository(DrawingDatabase.getDatabase(application).DrawingDao())
+
+    init {
+        getAllDrawings()
+    }
 
 
     fun setPenSize(size: Float) {
@@ -121,13 +129,11 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
     }
 
     //gets all the drawings in the database
-    //note that it just get's the DrawingEntities, so you still need to load the actual image
-    suspend fun getAllDrawings():List<DrawingEntity> {
-            return withContext(Dispatchers.IO) {
-                drawingRepository.getAllDrawings()
-
-                //here someone can do something with these, like display them all in a load image thing or something
-            }
+    //note that it just gets the DrawingEntities, so you still need to load the actual image
+    fun getAllDrawings() {
+        viewModelScope.launch {
+            _drawings.value = drawingRepository.getAllDrawings()
+        }
     }
 
     //load a drawing by filename

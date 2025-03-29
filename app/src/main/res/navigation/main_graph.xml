@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/drawingFragment">
+
+    <fragment
+        android:id="@+id/drawingFragment"
+        android:name="com.example.drawingapp.DrawingFragment"
+        android:label="DrawingFragment" >
+        <action
+            android:id="@+id/action_drawingFragment_to_fileMenuFragment"
+            app:destination="@id/fileMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fileMenuFragment"
+        android:name="com.example.drawingapp.FileMenuFragment"
+        android:label="FileMenuFragment" >
+        <action
+            android:id="@+id/action_fileMenuFragment_to_drawingFragment"
+            app:destination="@id/drawingFragment" />
+    </fragment>
+</navigation>
