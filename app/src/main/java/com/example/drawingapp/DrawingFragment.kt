@@ -107,7 +107,7 @@ class DrawingFragment : Fragment() {
             findNavController().navigate(R.id.action_drawingFragment_to_fileMenuFragment)
         }
     }
-
+        //color buttons
         private fun setupColorButtons(view: View, drawingView: DrawingView) {
         view.findViewById<View>(R.id.blackColorButton).setOnClickListener {
             drawingView.setColor(Color.BLACK)
