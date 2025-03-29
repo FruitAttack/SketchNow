@@ -12,22 +12,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
@@ -35,12 +19,6 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.Date
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.get
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 
@@ -116,28 +94,19 @@ class DrawingFragment : Fragment() {
         }
     }
 
-    //saves the current canvas as image.png
-    private fun setupSaveButton() {
-        saveButton.setOnClickListener {
-            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val filename = "drawing_$timestamp.png"
 
-            viewModel.saveDrawing(filename)
-            Toast.makeText(requireContext(), "Drawing saved as $filename", Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    //temporary - loads the image named image.png
-    private fun setupLoadButton() {
-        loadButton.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.loadImageToBitmap("image.png")
-                Toast.makeText(requireContext(), "image.png loaded", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+//    //temporary - loads the image named image.png
+//    private fun setupLoadButton() {
+//        loadButton.setOnClickListener {
+//            lifecycleScope.launch {
+//                viewModel.loadImageToBitmap("image.png")
+//                Toast.makeText(requireContext(), "image.png loaded", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
-        private fun setupColorButtons(view: View, drawingView: DrawingView) {
+    private fun setupColorButtons(view: View, drawingView: DrawingView) {
         view.findViewById<View>(R.id.blackColorButton).setOnClickListener {
             drawingView.setColor(Color.BLACK)
         }
@@ -159,7 +128,7 @@ class DrawingFragment : Fragment() {
         saveButton.setOnClickListener {
 
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val filename = "drawing_$timestamp"
+            val filename = "drawing_$timestamp.png"
 
             viewModel.saveDrawing(filename)
 
@@ -175,6 +144,10 @@ class DrawingFragment : Fragment() {
                     drawingView.setBitmap(newBitmap)
                     drawingView.invalidate()
                 }
+            }
+        }
+    }
+
     private fun setupLoadButton() {
         loadButton.setOnClickListener {
 
