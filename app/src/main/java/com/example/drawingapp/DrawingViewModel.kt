@@ -28,7 +28,8 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
     private val _penOpacity = MutableStateFlow(255)
     val penOpacity: StateFlow<Int> get() = _penOpacity
 
-    private var _bitmap: Bitmap? = null
+    private val _bitmap = MutableStateFlow<Bitmap?>(null)
+    val bitmap: StateFlow<Bitmap?> get() = _bitmap
 
     private val drawingRepository = DrawingRepository(DrawingDatabase.getDatabase(application).DrawingDao())
 
@@ -45,10 +46,8 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
         _penOpacity.value = opacity
     }
 
-    fun getBitmap(): Bitmap? = _bitmap
-
     fun setBitmap(bitmap: Bitmap) {
-        _bitmap = bitmap
+        _bitmap.value = bitmap
     }
 
     //functions to work with the database
@@ -57,7 +56,7 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
     fun saveDrawing(filename: String) {
         viewModelScope.launch {
             //generate the file path where the bitmap will be saved
-            val filePath = saveBitmapToFile(_bitmap, filename)
+            val filePath = saveBitmapToFile(_bitmap.value, filename)
 
             //only save the drawing if the file path is not null
             if (filePath != null) {
@@ -123,6 +122,7 @@ class DrawingViewModel(application: Application) : AndroidViewModel(application)
     }
 
     //gets all the drawings in the database
+    //note that it just get's the DrawingEntities, so you still need to load the actual image
     suspend fun getAllDrawings():List<DrawingEntity> {
             return withContext(Dispatchers.IO) {
                 drawingRepository.getAllDrawings()
