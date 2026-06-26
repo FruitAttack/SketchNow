@@ -1,38 +1,30 @@
-# **Drawing App - Android Development**  
+# **Android Drawing App**
 
-## **Contributors**  
-- **Spencer Perry**  
-- **Liam Coburn**  
-- **Rohith Veeramachaneni**  
+This drawing app is a team-based class project built in Kotlin for creating, editing, and sharing images on Android. The app provides a basic canvas to draw on, with brush settings, image effects, and local image persistence.
 
-## **Unit Tests**  
-✔ **View Model**  
-✔ **Drawing Functionality**  
-✔ **Color Selection**  
-✔ **Brush Selection**  
-✔ **Brush Size Adjustment**  
-✔ **Canvas Updates**  
+This repository also includes a Ktor-based social server, that allows users to share saved drawings with others, and download other user's shared drawings.
 
-## **Classes to Implement**  
-- **Model Class** – Handles data and logic  
-- **Tools Class** – Manages drawing tools  
-- **View Model** – Connects UI with logic  
-- **View** – Handles UI elements  
+# Features
+- Canvas-based freehand drawing
+- Brush size and opacity control
+- Basic color selection
+- Image saving and loading
+- Gaussian blur and salt & pepper noise image effects
+- Share and download images.
 
-## **Project Schedule**  
+# Tech Stack
+- Kotlin
+- Android Studio
+- Android SDK
+- Room Database
 
-| **Task**             | **Assigned To** | **Deadline**   |  
-|----------------------|----------------|---------------|  
-| **Skeleton Layout**  | Rohith         | Feb 10th      |  
-| **Canvas Implementation** | Liam         | Feb 13th      |  
-| **Pen & Brush Size** | Spencer        | Feb 16th      |  
-| **Pen Color**       | Rohith         | Feb 19th      |  
-| **Pen Shape**       | Liam / Spencer           | Feb 19th      |  
+# Contributors
+- Spencer Perry
+- Liam Coburn
+- Rohith Veeramachaneni
 
-## **App Layout**  
-- **Splash Screen** 
-![alt text](https://github.com/CS4530-S2025/android-drawing-project-team-1/blob/main/Images_For_README/Spash_Screen.jpg) 
-- **Canvas Screen**  
-![alt text](https://github.com/CS4530-S2025/android-drawing-project-team-1/blob/main/Images_For_README/Canvas_Screen.jpg)
-- **Save Screen**  
- ![alt text](https://github.com/CS4530-S2025/android-drawing-project-team-1/blob/main/Images_For_README/File_Open_Screen.jpg)
+# My Contributions
+- Implemented core drawing functionality
+- Image processing effects
+- Database functionality
+- Image persistence to save/load images.
