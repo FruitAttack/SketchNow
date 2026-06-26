@@ -1,6 +1,6 @@
-# **Android Drawing App**
+# **Sketch Now**
 
-This drawing app is a team-based class project built in Kotlin for creating, editing, and sharing images on Android. The app provides a basic canvas to draw on, with brush settings, image effects, and local image persistence.
+Sketch Now is a team-based class project built in Kotlin for creating, editing, and sharing images on Android. The app provides a basic canvas to draw on, with brush settings, image effects, and local image persistence.
 
 This repository also includes a Ktor-based social server, that allows users to share saved drawings with others, and download other user's shared drawings.
 
